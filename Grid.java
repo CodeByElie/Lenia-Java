@@ -24,6 +24,6 @@ public class Grid extends JPanel{
         return cells[y][x];
     }
 
-    public int getWidth() {return width;}
-    public int getHeight() {return height;}
+    public int getGridWidth() {return width;}
+    public int getGridHeight() {return height;}
 }

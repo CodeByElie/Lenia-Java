@@ -18,12 +18,16 @@ public class Conway extends ALife {
         addComponent(grid);
     }
     public void createGlider() {
-        grid.getCell(0,1).live();
-        grid.getCell(1,2).live();
-        grid.getCell(2,2).live();
-        grid.getCell(2,1).live();
-        grid.getCell(2,0).live();
-        grid.getCell(2,1).live();
+        try {
+            grid.getCell(0,1).live();
+            grid.getCell(1,2).live();
+            grid.getCell(2,2).live();
+            grid.getCell(2,1).live();
+            grid.getCell(2,0).live();
+            grid.getCell(2,1).live();
+        } catch (Exception e) {
+            System.out.println("The grid is too small");
+        }
     }
 
 

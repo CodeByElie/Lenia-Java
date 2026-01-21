@@ -14,6 +14,7 @@ public abstract class ALife extends JFrame {
 
     public void draw() {
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

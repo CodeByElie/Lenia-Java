@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Cell extends JPanel{
     private boolean alive; 
-    private float color;
+    private double color;
 
     public Cell() {
         this(20);
@@ -35,10 +35,10 @@ public class Cell extends JPanel{
     };
 
 
-    public void setColor(float color) {
-        float scaled = color * (INFERNO_PALETTE.length - 1);
+    public void setColor(double color) {
+        double scaled = color * (INFERNO_PALETTE.length - 1);
         int index = (int) scaled;
-        float t = scaled - index;
+        double t = scaled - index;
 
         int[] c0 = INFERNO_PALETTE[index];
         int[] c1 = INFERNO_PALETTE[Math.min(index + 1, INFERNO_PALETTE.length - 1)];
@@ -49,7 +49,7 @@ public class Cell extends JPanel{
 
         setBackground(new Color(r, g, b));
     }
-    public float getColor() {return color;}
+    public double getColor() {return color;}
     public boolean isAlive() {return alive;}
 
 }

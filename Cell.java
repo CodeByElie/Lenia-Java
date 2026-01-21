@@ -36,6 +36,7 @@ public class Cell extends JPanel{
 
 
     public void setColor(double color) {
+        this.color = color;
         double scaled = color * (INFERNO_PALETTE.length - 1);
         int index = (int) scaled;
         double t = scaled - index;

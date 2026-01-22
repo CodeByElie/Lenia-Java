@@ -24,5 +24,6 @@ public abstract class ALife extends JFrame {
     }
 
     public abstract void init();
+    public abstract void init(boolean randomGeneration);
     public abstract void update();
 }

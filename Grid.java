@@ -21,7 +21,7 @@ public class Grid extends JPanel{
         cells = new Cell[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                cells[i][j] = new Cell(600/mx);
+                cells[i][j] = new Cell(Math.max(600/mx,1));
                 if(randomGeneration && random.nextBoolean()) cells[i][j].toggle();
                 add(cells[i][j]);
             }

@@ -2,9 +2,11 @@ public class Main {
     public static void main(String[] args) {
         Lenia c = new Lenia(100,100);
         c.init();
-        c.setConvolutionRadius(15);
-        c.addConvolutionFilter();
-        c.setConvolutionRadius(15);
+        c.setConvolutionRadius(20);
+        c.addConvolutionFilter(20,20);
+        c.addConvolutionFilter(60,60);
+        c.setConvolutionRadius(20);
+        c.computeKernel();
         c.draw();
         try {
                 Thread.sleep(1000);
@@ -19,6 +21,6 @@ public class Main {
                 e.printStackTrace();
                 break;
             }
-        }   
+        } 
     }
 }

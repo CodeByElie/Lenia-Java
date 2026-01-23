@@ -7,6 +7,26 @@ public class Lenia extends ALife{
     private double mu,sigma;
     private int convolutionRadius;
 
+    private double[][] kernel;
+
+    public void computeKernel() {
+        kernel = new double[2 * convolutionRadius + 1][2 * convolutionRadius + 1];
+        double sum = 0;
+        for (int dy = -convolutionRadius; dy <= convolutionRadius; dy++) {
+            for (int dx = -convolutionRadius; dx <= convolutionRadius; dx++) {
+                double dist = Math.sqrt(dx*dx + dy*dy) / convolutionRadius;
+                double g = gauss(dist);
+                kernel[dy + convolutionRadius][dx + convolutionRadius] = g;
+                sum += g;
+            }
+        }
+        for (int dy = 0; dy < kernel.length; dy++) {
+            for (int dx = 0; dx < kernel[0].length; dx++) {
+                kernel[dy][dx] /= sum;
+            }
+        }
+    }
+
     double gauss(double x) {
         return Math.exp(-0.5*Math.pow((x-mu)/sigma, 2));
     }
@@ -38,7 +58,7 @@ public class Lenia extends ALife{
         addComponent(grid);
         for(int y = 0;y<height;y++) {
             for(int x = 0;x<width;x++) {
-                grid.getCell(x, y).setColor(random.nextDouble());
+                grid.getCell(x, y).setColor(randomGeneration ? random.nextDouble() : 0);
             }
         }
     }
@@ -57,13 +77,27 @@ public class Lenia extends ALife{
         }
     }
 
+    public void addConvolutionFilter(int X,int Y) {
+        for(int y = X-convolutionRadius;y<=X+convolutionRadius;y++) {
+            for(int x = X-convolutionRadius;x<=X+convolutionRadius;x++) {
+                grid.getCell(x, y).setColor(
+                    gauss(
+                        Math.sqrt(
+                            (X-x)*(X-x) + (Y-y)*(Y-y)
+                        )/convolutionRadius
+                    )
+                );
+            }
+        }
+    }
+
     public void addSpot() {
         for(int y = 0;y<height;y++) {
             for(int x = 0;x<width;x++) {
                 grid.getCell(x, y).setColor(
-                        1/* -Math.min(Math.sqrt(
+                        1 -Math.min(Math.sqrt(
                             (width/2-x)*(width/2-x) + (height/2-y)*(height/2-y)
-                        )/convolutionRadius,1) */
+                        )/convolutionRadius,1) 
                 );
             }
         }
@@ -75,36 +109,20 @@ public class Lenia extends ALife{
         double dt = 0.1;
         double[][] newColors = new double[height][width];
 
-        double u,g,growth;
-
-        for(int y =0;y<height;y++){
-            for(int x =0;x<width;x++){
-                u = 0;
-                if(x==40 && y==40) System.out.println(grid.getCell(x, y).getColor());
-                for(int dx=-convolutionRadius;dx<=convolutionRadius;dx++) {
-                    for(int dy=-convolutionRadius;dy<=convolutionRadius;dy++) {
-                        g = gauss(
-                            Math.sqrt(
-                                dx*dx+dy*dy
-                            )/convolutionRadius
-                        );
-                        u+=g*grid.getCell((x + dx + width) % width, (y + dy + height) % height).getColor();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                double u = 0;
+                for (int dy = -convolutionRadius; dy <= convolutionRadius; dy++) {
+                    for (int dx = -convolutionRadius; dx <= convolutionRadius; dx++) {
+                        int nx = (x + dx + width) % width;
+                        int ny = (y + dy + height) % height;
+                        u += kernel[dy + convolutionRadius][dx + convolutionRadius] * grid.getCell(nx, ny).getColor();
                     }
                 }
-                if(x==40 && y==40) System.out.println(u);
-
-                growth = (-1+2.0*gauss(u));
-
-                if(x==40 && y==40) System.out.println(growth);
-
-                newColors[y][x]+=dt*growth;
-
-                newColors[y][x] = Math.min(Math.max(newColors[y][x],0),1);
+                double growth = -1 + 2.0 * gauss(u,0.15,0.015);
+                newColors[y][x] = Math.min(Math.max(grid.getCell(x, y).getColor() + dt * growth, 0), 1);
             }
         }
-
-
-
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {

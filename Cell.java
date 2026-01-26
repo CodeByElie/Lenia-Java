@@ -25,25 +25,13 @@ public class Cell {
         setColor(this.alive ? 1 : 0);
     }
 
-    private static final int[][] INFERNO_PALETTE = {
-        {0, 0, 4}, {31, 12, 72}, {85, 15, 109}, {136, 34, 106}, {186, 54, 85}, {227, 89, 51}, {249, 140, 10}, {252, 195, 50}, {240, 249, 33}
-    };
-
-
     public void setColor(double color) {
         this.color = color;
     }
     public int getColorRGB() {
-        double scaled = color * (INFERNO_PALETTE.length - 1);
-        int index = (int) scaled;
-        double t = scaled - index;
-
-        int[] c0 = INFERNO_PALETTE[index];
-        int[] c1 = INFERNO_PALETTE[Math.min(index + 1, INFERNO_PALETTE.length - 1)];
-
-        int r = (int) (c0[0] + t * (c1[0] - c0[0]));
-        int g = (int) (c0[1] + t * (c1[1] - c0[1]));
-        int b = (int) (c0[2] + t * (c1[2] - c0[2]));
+        int b = (int)(color < 0.5 ? 0 : 255*color);
+        int r = (int)(color < 0.5 ? color*255 : 255*(1-color));
+        int g = 0;
         return 0xFF000000 | (r << 16) | (g << 8) | b;
     }
     public double getColor() {return color;};

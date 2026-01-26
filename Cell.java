@@ -1,7 +1,4 @@
-import javax.swing.JPanel;
-import java.awt.*;
-
-public class Cell extends JPanel{
+public class Cell {
     private boolean alive; 
     private double color;
 
@@ -10,9 +7,7 @@ public class Cell extends JPanel{
     }
     public Cell(int size) {
         this.alive = false;
-        setPreferredSize(new Dimension(size, size));
         setColor(0);
-        setOpaque(true);
     }
 
     public void live() {
@@ -37,6 +32,8 @@ public class Cell extends JPanel{
 
     public void setColor(double color) {
         this.color = color;
+    }
+    public int getColorRGB() {
         double scaled = color * (INFERNO_PALETTE.length - 1);
         int index = (int) scaled;
         double t = scaled - index;
@@ -47,10 +44,9 @@ public class Cell extends JPanel{
         int r = (int) (c0[0] + t * (c1[0] - c0[0]));
         int g = (int) (c0[1] + t * (c1[1] - c0[1]));
         int b = (int) (c0[2] + t * (c1[2] - c0[2]));
-
-        setBackground(new Color(r, g, b));
+        return 0xFF000000 | (r << 16) | (g << 8) | b;
     }
-    public double getColor() {return color;}
+    public double getColor() {return color;};
     public boolean isAlive() {return alive;}
 
 }

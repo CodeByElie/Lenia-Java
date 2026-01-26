@@ -1,15 +1,16 @@
-import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 public abstract class ALife extends JFrame {
-    private JPanel components;
+    private JLabel Limg;
     
 
     public ALife(String name) {
         super(name);
-        components = new JPanel();
-        add(components);
+        Limg = new JLabel();
     }
 
     public void draw() {
@@ -19,8 +20,10 @@ public abstract class ALife extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void addComponent(JComponent component) {
-        components.add(component);
+    public void setImage(BufferedImage img) {
+        setSize(img.getWidth(),img.getHeight());
+        Limg.setIcon(new ImageIcon(img));
+        getContentPane().add(Limg,BorderLayout.CENTER);
     }
 
     public abstract void init();

@@ -1,8 +1,7 @@
-import javax.swing.JPanel;
-import java.awt.*;
 import java.util.Random;
+import java.awt.image.BufferedImage;
 
-public class Grid extends JPanel{
+public class Grid extends BufferedImage{
     private Cell[][] cells;
     private int width, height;
 
@@ -11,19 +10,17 @@ public class Grid extends JPanel{
     }
     
     public Grid(int width, int height,boolean randomGeneration) {
+        super(width,height,BufferedImage.TYPE_INT_RGB);
         this.width = width;
         this.height = height;
         Random random = new Random();
-
-        setLayout(new GridLayout(height, width));
-
         int mx = Math.max(height,width);
         cells = new Cell[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 cells[i][j] = new Cell(Math.max(600/mx,1));
                 if(randomGeneration && random.nextBoolean()) cells[i][j].toggle();
-                add(cells[i][j]);
+                this.setRGB(i, j, cells[i][j].getColorRGB());
             }
         }
     }
@@ -31,7 +28,6 @@ public class Grid extends JPanel{
     public Cell getCell(int x, int y) {
         return cells[y][x];
     }
-
     public int getGridWidth() {return width;}
     public int getGridHeight() {return height;}
 }

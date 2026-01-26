@@ -15,7 +15,7 @@ public class Conway extends ALife {
     public void init() {this.init(true);}
     public void init(boolean random) {
         grid = new Grid(width, height,random);
-        addComponent(grid);
+        setImage(grid);
     }
     public void createGlider() {
         try {
@@ -52,8 +52,11 @@ public class Conway extends ALife {
             for(int x = 0;x<width;x++) {
                 if(willBeAlive[y][x]) grid.getCell(x, y).live();
                 else grid.getCell(x, y).kill();
+                grid.setRGB(x, y, grid.getCell(x, y).getColorRGB());
             }
         }
+
+        repaint();
 
 
     }

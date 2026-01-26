@@ -55,12 +55,14 @@ public class Lenia extends ALife{
     public void init(boolean randomGeneration) {
         Random random = new Random();
         grid = new Grid(width, height);
-        addComponent(grid);
+        setImage(grid);
         for(int y = 0;y<height;y++) {
             for(int x = 0;x<width;x++) {
                 grid.getCell(x, y).setColor(randomGeneration ? random.nextDouble() : 0);
+                grid.setRGB(x, y, grid.getCell(x, y).getColorRGB());
             }
         }
+        computeKernel();
     }
 
     public void addConvolutionFilter() {
@@ -127,8 +129,11 @@ public class Lenia extends ALife{
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 grid.getCell(x, y).setColor(newColors[y][x]);
+                grid.setRGB(x, y, grid.getCell(x, y).getColorRGB());
             }
         }
+
+        repaint();
     }
 
     

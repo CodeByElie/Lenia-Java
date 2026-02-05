@@ -1,6 +1,4 @@
-# ALife-Java
-
-This project implements some features to build artificial life in Java.
+# Lenia-Java
 
 There is an example of Lenia simulation.
 

@@ -75,6 +75,7 @@ public class Lenia extends ALife{
                         )/convolutionRadius
                     )
                 );
+                grid.setRGB(x, y, grid.getCell(x, y).getColorRGB());
             }
         }
     }
@@ -89,6 +90,7 @@ public class Lenia extends ALife{
                         )/convolutionRadius
                     )
                 );
+                grid.setRGB(x, y, grid.getCell(x, y).getColorRGB());
             }
         }
     }
@@ -101,6 +103,7 @@ public class Lenia extends ALife{
                             (width/2-x)*(width/2-x) + (height/2-y)*(height/2-y)
                         )/convolutionRadius,1) 
                 );
+                grid.setRGB(x, y, grid.getCell(x, y).getColorRGB());
             }
         }
     }

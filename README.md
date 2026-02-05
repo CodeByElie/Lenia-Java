@@ -19,6 +19,9 @@ Lenia extends classical cellular automata by introducing:
 - **Continuous states:** Each cell's state is a continuous value representing "mass" or "energy," allowing smooth gradients rather than binary on/off states.
 - **Kernel convolution:** The neighborhood influence is calculated using a continuous kernel function, typically a radially symmetric function, which weights neighbors' contributions smoothly.
 
+The images below represent the influence of the neighborhood for the cell placed in the center of the grid.
+
+![Little kernel Convolution](./LittleKernel.png)
 ![Kernel Convolution](./Kernel.png)
 
 - **Growth mapping:** After convolution, a nonlinear growth function modulates the update, shaping the dynamics and enabling complex patterns.
